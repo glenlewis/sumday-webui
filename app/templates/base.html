@@ -27,6 +27,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('main.profile') }}">Profile</a>
                         </li>
+                        {% if current_user.is_administrator %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('admin.users') }}">User Management</a>
+                        </li>
+                        {% endif %}
                         <li class="nav-item">
                             <span class="nav-link">{{ current_user.full_name }}</span>
                         </li>

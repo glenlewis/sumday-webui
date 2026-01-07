@@ -34,8 +34,10 @@ def create_app(config_name='default'):
     # Register blueprints
     from app.auth import auth_bp
     from app.main import main_bp
+    from app.admin import admin_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
+    app.register_blueprint(admin_bp)
 
     return app

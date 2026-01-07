@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(100), nullable=False)
     timezone = db.Column(db.String(50), nullable=False, default='UTC')
     is_administrator = db.Column(db.Boolean, nullable=False, default=False)
+    is_active = db.Column(db.Boolean, nullable=False, default=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 

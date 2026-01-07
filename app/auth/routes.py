@@ -5,6 +5,7 @@ from urllib.parse import urlencode
 from app.auth import auth_bp
 from app import db, login_manager
 from app.models import User
+import pytz
 
 oauth = OAuth()
 
@@ -63,6 +64,11 @@ def callback():
         session['auth0_userinfo'] = userinfo
         return redirect(url_for('auth.register'))
 
+    # Check if user is active
+    if not user.is_active:
+        flash('Your account has been deactivated. Please contact an administrator.', 'error')
+        return redirect(url_for('main.index'))
+
     # Existing user - log them in
     login_user(user)
     return redirect(url_for('main.profile'))
@@ -107,7 +113,8 @@ def register():
         return redirect(url_for('main.profile'))
 
     # GET request - show registration form
-    return render_template('auth/register.html', userinfo=userinfo)
+    timezones = pytz.common_timezones
+    return render_template('auth/register.html', userinfo=userinfo, timezones=timezones)
 
 
 @auth_bp.route('/logout')
