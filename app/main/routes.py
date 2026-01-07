@@ -45,3 +45,13 @@ def update_profile():
 
     flash('Profile updated successfully!', 'success')
     return redirect(url_for('main.profile'))
+
+
+@main_bp.route('/profile/toggle-admin', methods=['POST'])
+@login_required
+def toggle_admin():
+    """Toggle administrator status for the current user"""
+    current_user.toggle_administrator()
+    status = 'enabled' if current_user.is_administrator else 'disabled'
+    flash(f'Administrator status {status}.', 'success')
+    return redirect(url_for('main.profile'))

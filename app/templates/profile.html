@@ -12,6 +12,29 @@
                 <h5 class="card-title">Account Information</h5>
                 <p><strong>Email:</strong> {{ user.email }}</p>
                 <p><strong>Member since:</strong> {{ user.created_at.strftime('%B %d, %Y') }}</p>
+                <p><strong>Administrator:</strong>
+                    {% if user.is_administrator %}
+                        <span class="badge bg-success">Yes</span>
+                    {% else %}
+                        <span class="badge bg-secondary">No</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Administrator Settings</h5>
+                <p>Toggle your administrator status:</p>
+                <form method="POST" action="{{ url_for('main.toggle_admin') }}">
+                    <button type="submit" class="btn btn-warning">
+                        {% if user.is_administrator %}
+                            Disable Administrator
+                        {% else %}
+                            Enable Administrator
+                        {% endif %}
+                    </button>
+                </form>
             </div>
         </div>
 

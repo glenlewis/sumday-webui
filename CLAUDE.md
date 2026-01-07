@@ -24,14 +24,15 @@ cp .env.example .env
 
 ### Database Setup
 ```bash
-# Create PostgreSQL database
-createdb sumday_db
+# Create PostgreSQL database (using the name from your .env)
+createdb sumday
 
-# Initialize database (in Python shell)
-flask shell
->>> from app import db
->>> db.create_all()
->>> exit()
+# Run database migrations
+flask db upgrade
+
+# To create a new migration after model changes
+flask db migrate -m "Description of changes"
+flask db upgrade
 ```
 
 ### Running the Application
@@ -62,6 +63,7 @@ flask run
   - `email` - User email address
   - `first_name`, `last_name` - User's name
   - `timezone` - User's preferred timezone
+  - `is_administrator` - Administrator flag (boolean, default: False)
   - `created_at`, `updated_at` - Timestamps
 
 ### Authentication Flow
@@ -73,7 +75,29 @@ flask run
 ### Key Dependencies
 - Flask - Web framework
 - Flask-SQLAlchemy - ORM for database
+- Flask-Migrate - Database migrations (Alembic)
 - Flask-Login - User session management
 - Authlib - Auth0 OAuth integration
 - psycopg2-binary - PostgreSQL adapter
 - pytz - Timezone support
+
+### Database Migrations
+This project uses Flask-Migrate (Alembic) for database schema management.
+
+#### Common Migration Commands
+```bash
+# Create a new migration after changing models
+flask db migrate -m "Description of your changes"
+
+# Apply migrations to database
+flask db upgrade
+
+# Rollback last migration
+flask db downgrade
+
+# View migration history
+flask db history
+
+# View current database version
+flask db current
+```

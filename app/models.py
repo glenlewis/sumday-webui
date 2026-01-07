@@ -13,6 +13,7 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
     timezone = db.Column(db.String(50), nullable=False, default='UTC')
+    is_administrator = db.Column(db.Boolean, nullable=False, default=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -32,5 +33,11 @@ class User(UserMixin, db.Model):
             self.last_name = last_name
         if timezone:
             self.timezone = timezone
+        self.updated_at = datetime.utcnow()
+        db.session.commit()
+
+    def toggle_administrator(self):
+        """Toggle administrator status"""
+        self.is_administrator = not self.is_administrator
         self.updated_at = datetime.utcnow()
         db.session.commit()
