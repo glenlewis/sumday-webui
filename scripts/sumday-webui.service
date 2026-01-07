@@ -1,0 +1,20 @@
+[Unit]
+Description=Sumday WebUI
+After=network.target postgresql.service
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=kisa
+Group=kisa
+WorkingDirectory=/home/kisa/Development/sumday-webui
+Environment="PATH=/home/kisa/Development/sumday-webui/.venv/bin:/usr/local/bin:/usr/bin:/bin"
+EnvironmentFile=/home/kisa/Development/sumday-webui/.env
+ExecStart=/home/kisa/Development/sumday-webui/.venv/bin/python /home/kisa/Development/sumday-webui/run.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
