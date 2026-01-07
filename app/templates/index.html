@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Sumday{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4">Welcome to Sumday</h1>
+        <p class="lead mt-4">Your personal productivity companion</p>
+
+        {% if current_user.is_authenticated %}
+            <div class="mt-5">
+                <p>Hello, {{ current_user.full_name }}!</p>
+                <a href="{{ url_for('main.profile') }}" class="btn btn-primary btn-lg">Go to Profile</a>
+            </div>
+        {% else %}
+            <div class="mt-5">
+                <p>Please log in to get started</p>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Login with Auth0</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
